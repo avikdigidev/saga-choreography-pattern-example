@@ -4,13 +4,13 @@ import com.avikdigidev.saga.commons.dto.OrderRequestDTO;
 import com.avikdigidev.saga.commons.event.OrderStatus;
 import com.avikdigidev.saga.order.entities.PurchaseOrder;
 import com.avikdigidev.saga.order.repository.OrderRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
+@Service
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
@@ -28,10 +28,12 @@ public class OrderService {
     return orderRepository.findAll();
     }
 
-    private PurchaseOrder convertDTOToEntity(OrderRequestDTO orderRequestDTO) {
+    private PurchaseOrder convertDTOToEntity(OrderRequestDTO dto) {
         PurchaseOrder purchaseOrder = new PurchaseOrder();
-        BeanUtils.copyProperties(orderRequestDTO, purchaseOrder);
+        purchaseOrder.setProductId(dto.getProductId());
+        purchaseOrder.setUserId(dto.getUserId());
         purchaseOrder.setOrderStatus(OrderStatus.ORDER_CREATED);
+        purchaseOrder.setAmount(dto.getAmount());
         return purchaseOrder;
     }
 }

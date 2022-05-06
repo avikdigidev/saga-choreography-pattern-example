@@ -29,6 +29,7 @@ public class PaymentService {
         userBalanceRepository.saveAll(Stream.of(new UserBalance(101, 100300),
                 new UserBalance(102, 10000),
                 new UserBalance(103, 1000),
+                new UserBalance(105, 1000),
                 new UserBalance(104, 9)).collect(Collectors.toList()));
     }
 
