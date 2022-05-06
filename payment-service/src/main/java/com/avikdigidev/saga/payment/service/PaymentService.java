@@ -41,13 +41,13 @@ public class PaymentService {
     @Transactional
     public PaymentEvent newOrderEvent(OrderEvent orderEvent) {
         OrderRequestDTO orderRequestDTO = orderEvent.getOrderRequestDTO();
-        PaymentRequestDTO paymentRequestDTO = new PaymentRequestDTO(orderRequestDTO.getOrderID(), orderRequestDTO.getUserID(), orderRequestDTO.getAmount());
+        PaymentRequestDTO paymentRequestDTO = new PaymentRequestDTO(orderRequestDTO.getOrderId(), orderRequestDTO.getUserId(), orderRequestDTO.getAmount());
 
-        return userBalanceRepository.findById(orderRequestDTO.getUserID())
+        return userBalanceRepository.findById(orderRequestDTO.getUserId())
                 .filter(ub -> ub.getAmount() > orderRequestDTO.getAmount())
                 .map(ub -> {
                     ub.setAmount(ub.getAmount() - orderRequestDTO.getAmount());
-                    userTransactionRepository.save(new UserTransaction(orderRequestDTO.getOrderID(), orderRequestDTO.getUserID(), orderRequestDTO.getAmount()));
+                    userTransactionRepository.save(new UserTransaction(orderRequestDTO.getOrderId(), orderRequestDTO.getUserId(), orderRequestDTO.getAmount()));
                     return new PaymentEvent(paymentRequestDTO, PaymentStatus.COMPLETED);
                 }).orElse(new PaymentEvent(paymentRequestDTO, PaymentStatus.FAILED));
 
@@ -56,7 +56,7 @@ public class PaymentService {
 
     @Transactional
     public void cancelOrderEvent(OrderEvent orderEvent) {
-        userTransactionRepository.findById(orderEvent.getOrderRequestDTO().getOrderID()).ifPresent(ut -> {
+        userTransactionRepository.findById(orderEvent.getOrderRequestDTO().getOrderId()).ifPresent(ut -> {
             userTransactionRepository.delete(ut);
             userTransactionRepository.findById(ut.getOrderId())
                     .ifPresent(ub -> ub.setAmount(ub.getAmount() + ut.getAmount()));

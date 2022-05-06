@@ -8,8 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 public class OrderRequestDTO {
 
-    private Integer userID;
-    private Integer productID;
+    private Integer userId;
+    private Integer productId;
     private Integer  amount;
-    private Integer orderID;
+    private Integer orderId;
 }

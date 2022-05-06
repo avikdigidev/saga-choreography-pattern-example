@@ -19,7 +19,7 @@ public class OrderService {
 @Transactional
     public PurchaseOrder createOrder(OrderRequestDTO orderRequestDTO) {
         PurchaseOrder order = orderRepository.save(convertDTOToEntity(orderRequestDTO));
-        orderRequestDTO.setOrderID(order.getId());
+        orderRequestDTO.setOrderId(order.getId());
         //produce kafka event with order created status
         orderStatusPublisher.publishOrderEvent(orderRequestDTO,OrderStatus.ORDER_CREATED);
         return order;

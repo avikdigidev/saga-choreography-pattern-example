@@ -17,8 +17,8 @@ public class PurchaseOrder {
     @Id
     @GeneratedValue
     private Integer id;
-    private Integer userID;
-    private Integer productID;
+    private Integer userId;
+    private Integer productId;
     private Integer amount;
     @Enumerated(EnumType.STRING)
     private OrderStatus orderStatus;
