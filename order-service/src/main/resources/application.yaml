@@ -4,7 +4,7 @@ spring:
       function:
         definition : orderSupplier
       bindings:
-        orderSupplier-out-0:
+        orderSupplier-out-0: # out means producer
           destination: order-event
 
 server:

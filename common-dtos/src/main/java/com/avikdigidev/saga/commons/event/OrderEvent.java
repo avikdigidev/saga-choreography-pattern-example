@@ -1,11 +1,13 @@
 package com.avikdigidev.saga.commons.event;
 
 import com.avikdigidev.saga.commons.dto.OrderRequestDTO;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.UUID;
 @NoArgsConstructor
+@Data
 public class OrderEvent implements Event{
     private UUID eventId= UUID.randomUUID();
     private Date date = new Date();
